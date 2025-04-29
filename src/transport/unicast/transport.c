@@ -221,7 +221,7 @@ static z_result_t _z_unicast_handshake_client(_z_transport_unicast_establish_par
         ret = _Z_ERR_MESSAGE_UNEXPECTED;
     }
     _Z_DEBUG("Received Z_OPEN(Ack)");
-    param->_lease = oam._body._open._lease;  // The session lease
+    param->_lease = (oam._body._open._lease < Z_TRANSPORT_LEASE) ? oam._body._open._lease : Z_TRANSPORT_LEASE;
     // The initial SN at RX side. Initialize the session as we had already received
     // a message with a SN equal to initial_sn - 1.
     param->_initial_sn_rx = oam._body._open._initial_sn;
@@ -289,7 +289,7 @@ static z_result_t _z_unicast_handshake_listener(_z_transport_unicast_establish_p
     }
     _Z_DEBUG("Received Z_OPEN(Syn)");
     // Process message
-    param->_lease = tmsg._body._open._lease;
+    param->_lease = (tmsg._body._open._lease < Z_TRANSPORT_LEASE) ? tmsg._body._open._lease : Z_TRANSPORT_LEASE;
     param->_initial_sn_rx = tmsg._body._open._initial_sn;
     _z_t_msg_clear(&tmsg);
 
