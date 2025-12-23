@@ -1,8 +1,8 @@
-prefix=/usr/local
+prefix=/Users/youtalk/src/ios_node/deps
 
 Name: zenohpico
 Description: 
 URL: 
-Version: 1.0.20241210dev
+Version: 1.1.0
 Cflags: -I${prefix}/include
 Libs: -L${prefix}/lib -lzenohpico
