@@ -1,4 +1,4 @@
-prefix=/Users/youtalk/src/ios_node/deps
+prefix=/Users/youtalk/src/conduit/deps
 
 Name: zenohpico
 Description: 
