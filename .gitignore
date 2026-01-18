@@ -65,7 +65,3 @@ Module.symvers
 Mkfile.old
 dkms.conf
 .cache
-
-build-ios
-build-maccatalyst
-build-simulator
