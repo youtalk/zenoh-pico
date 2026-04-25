@@ -214,7 +214,7 @@ size_t _z_read_exact_tcp(const _z_sys_net_socket_t sock, uint8_t *ptr, size_t le
 }
 
 size_t _z_send_tcp(const _z_sys_net_socket_t sock, const uint8_t *ptr, size_t len) {
-#if defined(ZENOH_LINUX)
+#if defined(ZENOH_LINUX) || defined(ZENOH_ANDROID)
     return (size_t)send(sock._fd, ptr, len, MSG_NOSIGNAL);
 #else
     return send(sock._fd, ptr, len, 0);
@@ -564,7 +564,7 @@ void _z_close_udp_multicast(_z_sys_net_socket_t *sockrecv, _z_sys_net_socket_t *
         // Do nothing. It must never not enter here.
         // Required to be compliant with MISRA 15.7 rule
     }
-#if defined(ZENOH_LINUX)
+#if defined(ZENOH_LINUX) || defined(ZENOH_ANDROID)
     if (lep._iptcp != NULL) {
         z_free(lep._iptcp->ai_addr);
     }
