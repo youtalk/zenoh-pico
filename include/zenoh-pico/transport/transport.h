@@ -117,6 +117,10 @@ typedef struct {
     _z_zint_t _sn_rx_reliable;
     _z_zint_t _sn_rx_best_effort;
     volatile bool _received;
+    // Lease advertised by the peer: it paces its own KEEP_ALIVEs on it, so the
+    // peer is considered gone only after this long without receiving anything.
+    // _common._lease (the lowest of both leases) paces our KEEP_ALIVEs.
+    _z_zint_t _peer_lease;
 
 #if Z_FEATURE_FRAGMENTATION == 1
     // Defragmentation buffer
@@ -160,6 +164,7 @@ typedef struct {
     _z_zint_t _initial_sn_rx;
     _z_zint_t _initial_sn_tx;
     _z_zint_t _lease;
+    _z_zint_t _peer_lease;
     z_whatami_t _whatami;
     uint8_t _key_id_res;
     uint8_t _req_id_res;

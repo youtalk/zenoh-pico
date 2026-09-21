@@ -124,6 +124,7 @@ z_result_t _z_unicast_transport_create(_z_transport_t *zt, _z_link_t *zl,
 
         // Transport lease
         ztu->_common._lease = param->_lease;
+        ztu->_peer_lease = param->_peer_lease;
 
         // Transport link for unicast
         ztu->_common._link = *zl;
@@ -222,6 +223,7 @@ static z_result_t _z_unicast_handshake_client(_z_transport_unicast_establish_par
     }
     _Z_DEBUG("Received Z_OPEN(Ack)");
     param->_lease = (oam._body._open._lease < Z_TRANSPORT_LEASE) ? oam._body._open._lease : Z_TRANSPORT_LEASE;
+    param->_peer_lease = oam._body._open._lease;
     // The initial SN at RX side. Initialize the session as we had already received
     // a message with a SN equal to initial_sn - 1.
     param->_initial_sn_rx = oam._body._open._initial_sn;
@@ -290,6 +292,7 @@ static z_result_t _z_unicast_handshake_listener(_z_transport_unicast_establish_p
     _Z_DEBUG("Received Z_OPEN(Syn)");
     // Process message
     param->_lease = (tmsg._body._open._lease < Z_TRANSPORT_LEASE) ? tmsg._body._open._lease : Z_TRANSPORT_LEASE;
+    param->_peer_lease = tmsg._body._open._lease;
     param->_initial_sn_rx = tmsg._body._open._initial_sn;
     _z_t_msg_clear(&tmsg);
 
